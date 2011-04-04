@@ -1,6 +1,6 @@
 // ATS-1 Arduino Flight Code 
 // By Nigel Smart - nigel@nigey.co.uk
-// Rev 1.2 - 4th April 2011
+// Rev 1.1 - 4th April 2011
 // Additional OneWire code by James Coxon & fsphil
 // Compiled with the help of UKHAS members from #highaltitude @ irc.freenode.net
 
