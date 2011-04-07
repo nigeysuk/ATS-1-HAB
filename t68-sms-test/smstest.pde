@@ -77,7 +77,7 @@ void send_sms(char *data)
    * Full example: 0011000C914421436587090000AA
    */
 
-  nss.print("0011000B914487693917300000AA");
+  nss.print("0011000B91XXXXXXXXXXXX0000AA");
   hexdump_byte(data_length & 0xFF);
 
   /* from sms_example_v2.c ALIEN Project Daniel Richman */
