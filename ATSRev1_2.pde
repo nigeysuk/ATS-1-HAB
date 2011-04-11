@@ -4,13 +4,14 @@
 // Additional OneWire code by James Coxon & fsphil
 // Compiled with the help of UKHAS members from #highaltitude @ irc.freenode.net
 
-#define TX0 7
-#define TX1 5
+#define TX0 7 //RTTY Transmit Pin
+#define TX1 5 //RTTY Transmit Pin
+
 #include <OneWire.h> //OneWire Temp Sensor Library
 #include <stdio.h>
 #include <util/crc16.h>
 #include <TinyGPS.h>
-#include <NewSoftSerial.h>
+#include "NewSoftSerial.h"
 
 OneWire ds(8); // DS18x20 Temperature chip i/o OneWire
 
@@ -92,19 +93,19 @@ uint16_t crccat(char *msg)
 
 void setup(void) {
   // Initialize inputs/outputs
-
+  
+  
+  pinMode(TX0, OUTPUT); //RTTY Transmit Pin
+  pinMode(TX1, OUTPUT); //RTTY Transmit PIn
   pinMode(13, OUTPUT); 
   pinMode(12, OUTPUT);
   digitalWrite(12,HIGH);
 
   // Setup the GPS serial port
-  Serial.begin(115200);
-  nss.begin(9600);
+  //Serial.begin(4800);
+  //nss.begin(4800);
 
   count = 1;
-
-  pinMode(TX0, OUTPUT);
-  pinMode(TX1, OUTPUT);
 
   rtty_send(".... Starting Testing ATS-1 1 Pin RTTY....\n");
 
@@ -114,6 +115,7 @@ void loop(void) {
   long lat, lng;
   unsigned long time;
   unsigned long currentMillis = millis();
+  
   /* Got any data yet? */
   if(nss.available() <= 0) return;
   if(!gps.encode(nss.read())) return;
@@ -156,17 +158,14 @@ void loop(void) {
     /* Append the checksum, skipping the $$ prefix */
     crccat(msg + 2);
     
-   	/* Transmit it! */
+    /* Transmit it! */
 
-
-
-    //char msg[100];
-    //Serial.print(msg);
+    //nss.end();
     rtty_send(msg);
-    
+    //nss.begin(4800);
     previousMillis = currentMillis;
   }
-
+  
 }
 // --------------------------------------------------------------------------------- 
 // RTTY Code 
