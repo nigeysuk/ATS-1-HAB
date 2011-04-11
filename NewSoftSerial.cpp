@@ -426,7 +426,12 @@ void NewSoftSerial::begin(long speed)
 void NewSoftSerial::end()
 {
   if (digitalPinToPCMSK(_receivePin))
+  {
+    *digitalPinToPCICR(_receivePin) &= ~_BV(digitalPinToPCICRbit(_receivePin));
     *digitalPinToPCMSK(_receivePin) &= ~_BV(digitalPinToPCMSKbit(_receivePin));
+  }
+
+  active_object = 0;
 }
 
 

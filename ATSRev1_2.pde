@@ -101,14 +101,17 @@ void setup(void) {
   pinMode(12, OUTPUT);
   digitalWrite(12,HIGH);
 
-  // Setup the GPS serial port
+  
   //Serial.begin(4800);
-  //nss.begin(4800);
+  
 
   count = 1;
 
   rtty_send(".... Starting Testing ATS-1 1 Pin RTTY....\n");
-
+  
+  // Setup the GPS serial port
+  nss.begin(4800);
+  
 }
 void loop(void) {
 
@@ -160,9 +163,9 @@ void loop(void) {
     
     /* Transmit it! */
 
-    //nss.end();
+    nss.end();
     rtty_send(msg);
-    //nss.begin(4800);
+    nss.begin(4800);
     previousMillis = currentMillis;
   }
   
