@@ -1,1 +1,9 @@
-Hello World
+11th April 2011
+
+Fixed - IRQ bug that garbled RTTY data, problem tracked to NewSoftSerial Interrupt
+Added - SMS Code for the T68i now integrated into the main code, static testing is working fine
+
+TODO 
+
+Create timer and gps code to send a sms every 10 minutes with GPS Lat & Lon
+
