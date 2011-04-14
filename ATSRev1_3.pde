@@ -1,8 +1,9 @@
 // ATS-1 Arduino Flight Code 
 // By Nigel Smart - nigel@nigey.co.uk
-// Rev 1.3 - 11th April 2011
+// Rev 1.3.1 - 14th April 2011
 // Additional OneWire code by James Coxon & fsphil
 // Compiled with the help of UKHAS members from #highaltitude @ irc.freenode.net
+// SMS Library code by Daniel Richman & Project Alien
 
 #define TX0 7 //RTTY Transmit Pin
 #define TX1 5 //RTTY Transmit Pin 
@@ -105,10 +106,10 @@ void setup(void) {
 
   count = 1;
   
-  rtty_send(".... Starting Testing ATS-1 1 Pin RTTY....\n");
+  rtty_send(".... ATS-1 Powering UP ....\n");
     
   //SMS Test Data
-  send_sms("Testing SMS Send");
+  send_sms("ATS-1 Powering UP");
   
   // Setup the GPS serial port
   nss.begin(4800);
@@ -148,7 +149,7 @@ void loop(void) {
   if(currentMillis - previousMillis > interval) {
 
     snprintf(msg, 120,
-    "$$ATS1,%i,%02li:%02li:%02li,%s%li.%05li,%s%li.%05li,%li,%i,%i,%i",
+    "$$$$ATS1,%i,%02li:%02li:%02li,%s%li.%05li,%s%li.%05li,%li,%i,%i,%i",
     count++, time / 1000000, time / 10000 % 100, time / 100 % 100,
     (lat >= 0 ? "" : "-"), labs(lat / 100000), labs(lat % 100000),
     (lng >= 0 ? "" : "-"), labs(lng / 100000), labs(lng % 100000),
@@ -160,11 +161,17 @@ void loop(void) {
 
       );
     /* Append the checksum, skipping the $$ prefix */
-    crccat(msg + 2);
+    crccat(msg + 4);
     
     /* Transmit it! */
 
     nss.end();
+    
+  if(count % 20 == 0)
+    {
+      send_sms(msg + 4);
+    }
+    
     rtty_send(msg);
     nss.begin(4800);
     previousMillis = currentMillis;
