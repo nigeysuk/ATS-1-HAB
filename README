@@ -1,3 +1,7 @@
+14th April 2011
+
+Added - SMS Counter, sends SMS every 20 telemetry lines
+
 11th April 2011
 
 Fixed - IRQ bug that garbled RTTY data, problem tracked to NewSoftSerial Interrupt
@@ -5,5 +9,5 @@ Added - SMS Code for the T68i now integrated into the main code, static testing 
 
 TODO 
 
-Create timer and gps code to send a sms every 10 minutes with GPS Lat & Lon
+Play with SMS conditions, send sms only when counter is multiples of 20 and altitude is under 1000M
 
